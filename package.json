@@ -1,5 +1,5 @@
 {
-  "name": "vldtld",
+  "name": "@oakendigital/vldtld",
   "version": "0.0.1",
   "description": "A lightweight and fast email validation package that uses regex to validate email patterns and checks the top-level domain (TLD) against the latest official list from IANA.",
   "keywords": [
@@ -19,6 +19,10 @@
     "email-syntax",
     "npm"
   ],
+  "repository":"https://github.com/OakenDigital/vldtld",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
