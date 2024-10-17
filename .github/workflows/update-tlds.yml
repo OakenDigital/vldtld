@@ -2,7 +2,7 @@ name: Update TLD List
 
 on:
   schedule:
-    - cron: "0 0 * * 1" # Every Monday at midnight UTC
+    - cron: "0 0 * * *" # Every day at midnight UTC
   workflow_dispatch: # Allow manual triggering
 
 jobs:
@@ -13,17 +13,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install curl
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl
+      - name: Install dependencies
+        run: npm install
 
-      - name: Fetch TLDs
+      - name: Fetch TLDs and Generate tlds.ts
+        run: npx ts-node src/utils/fetchAndGenerateTLDs.ts
+
+      - name: Commit changes
         run: |
-          curl https://data.iana.org/TLD/tlds-alpha-by-domain.txt -o src/tlds.txt
-          sed -i '/^#/d' src/tlds.txt  # Remove lines starting with #
-          git config --local user.name "GitHub Action"
-          git config --local user.email "action@github.com"
-          git add src/tlds.txt
-          git commit -m "Update TLD list"
+          git add src/tlds.ts
+          git commit -m "Update TLDs TypeScript file" || echo "No changes to commit"
           git push

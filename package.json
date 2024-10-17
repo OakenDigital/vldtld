@@ -19,9 +19,13 @@
     "email-syntax",
     "npm"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate-tlds": "npx ts-node src/utils/fetchAndGenerateTLDs.ts",
+    "build": "npm run generate-tlds && tsc",
+    "watch": "tsc --watch",
+    "prepare": "npm run build"
   },
   "author": "Ron McCranie",
   "license": "MIT",
